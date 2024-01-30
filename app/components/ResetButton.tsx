@@ -8,6 +8,7 @@ export default function ResetButton() {
 
     const[count, setCount] = useState(0)
     const[showReset, Reset] = useState(true)
+   // What up
    
     //                                     Left Side                            Right Side
     const buttonNames = ['relative w-16 h-16 bg-red-500 right-96 top-1/2', 'relative w-16 h-16 bg-red-500 -right-96 top-1/2', 
