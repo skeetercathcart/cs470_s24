@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import TimerDisplay from "./TimerDisplay";
 import ResetButton from "./ResetButton";
-import { Stopwatch } from "ts-stopwatch"
 
 export default function StopWatch() {
 
@@ -15,9 +14,7 @@ export default function StopWatch() {
     const handleStart = () => {
       setIsActive(true)
       setIsPaused(true)
-      increment.current = setInterval(() => {
-        setTimer((timer) => timer + 1)
-      }, 10)
+     
     }
   
     const handlePause = () => {
