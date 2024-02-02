@@ -2,42 +2,99 @@
 
 import { useState, useEffect } from "react";
 
-
+type Target = {
+    css: String;
+    Side: String;
+    Distance: String;
+    Size: String;
+}
 
 export default function ResetButton(props) {
 
     const [count, setCount] = useState(0)
     const [showReset, Reset] = useState(true)
-    const [startTime, addStartTime] = useState<Number[]>([])
+    const [startTime, addStartTime] = useState<Number[]>([]) // Logs the time when the center button is clicked
+    const [buttonTime, addButtonTime] = useState<Number[]>([]) // Logs the time the target is clicked
 
   
 
     function logStartTime() {
         startTime.forEach(function(Element) {console.log(Element)})
         console.log("Array length = " + startTime.length)
-        console.log(typeof Date.now())
+        console.log(JSON.stringify(buttonNames[count]))
     }
 
+    const Button1: Target = {css: 'relative w-16 h-16 bg-red-500 right-96 top-1/2',  Side: 'Left', Distance: '96', Size: '16'}
+    const Button2: Target = {css: 'relative w-16 h-16 bg-red-500 -right-96 top-1/2', Side: 'Right', Distance: '96', Size: '16'}
+    
+    const Button3: Target = {css: 'relative w-32 h-32 bg-red-500 right-96 top-1/2',  Side: 'Left', Distance: '96', Size: '32'}
+    const Button4: Target = {css: 'relative w-32 h-32 bg-red-500 -right-96 top-1/2', Side: 'Right', Distance: '96', Size: '32'}
+   
+    const Button5: Target = {css: 'relative w-48 h-48 bg-red-500 right-96 top-1/2',  Side: 'Left', Distance: '96', Size: '48'}
+    const Button6: Target = {css: 'relative w-48 h-48 bg-red-500 -right-96 top-1/2', Side: 'Right', Distance: '96', Size: '48'}
+   
+    const Button7: Target = {css: 'relative w-64 h-64 bg-red-500 right-96 top-1/2',  Side: 'Left', Distance: '96', Size: '64'}
+    const Button8: Target = {css: 'relative w-64 h-64 bg-red-500 -right-96 top-1/2', Side: 'Right', Distance: '96', Size: '64'}
+    
+    const Button9: Target = {css: 'relative w-16 h-16 bg-red-500 right-40 top-1/2',   Side: 'Left', Distance: '40', Size: '16'}
+    const Button10: Target = {css: 'relative w-16 h-16 bg-red-500 -right-40 top-1/2', Side: 'Right', Distance: '40', Size: '16'}
+   
+    const Button11: Target = {css: 'relative w-32 h-32 bg-red-500 right-40 top-1/2',  Side: 'Left', Distance: '40', Size: '32'}
+    const Button12: Target = {css: 'relative w-32 h-32 bg-red-500 -right-40 top-1/2', Side: 'Right', Distance: '40', Size: '32'}
 
-    //                                        Left Side                                        Right Side
-    let buttonNames =   ['relative w-16 h-16 bg-red-500 right-96 top-1/2', 'relative w-16 h-16 bg-red-500 -right-96 top-1/2', 
-                         'relative w-32 h-32 bg-red-500 right-96 top-1/2', 'relative w-32 h-32 bg-red-500 -right-96 top-1/2',
-                         'relative w-48 h-48 bg-red-500 right-96 top-1/2', 'relative w-48 h-48 bg-red-500 -right-96 top-1/2',
-                         'relative w-64 h-64 bg-red-500 right-96 top-1/2', 'relative w-64 h-64 bg-red-500 -right-96 top-1/2',
-                         'relative w-16 h-16 bg-red-500 right-40 top-1/2', 'relative w-16 h-16 bg-red-500 -right-40 top-1/2', 
-                         'relative w-32 h-32 bg-red-500 right-40 top-1/2', 'relative w-32 h-32 bg-red-500 -right-40 top-1/2',
-                         'relative w-48 h-48 bg-red-500 right-40 top-1/2', 'relative w-48 h-48 bg-red-500 -right-40 top-1/2',
-                         'relative w-64 h-64 bg-red-500 right-40 top-1/2', 'relative w-64 h-64 bg-red-500 -right-40 top-1/2',
-                         'relative w-16 h-16 bg-red-500 right-56 top-1/2', 'relative w-16 h-16 bg-red-500 -right-56 top-1/2', 
-                         'relative w-32 h-32 bg-red-500 right-56 top-1/2', 'relative w-32 h-32 bg-red-500 -right-56 top-1/2',
-                         'relative w-48 h-48 bg-red-500 right-56 top-1/2', 'relative w-48 h-48 bg-red-500 -right-56 top-1/2',
-                         'relative w-64 h-64 bg-red-500 right-56 top-1/2', 'relative w-64 h-64 bg-red-500 -right-56 top-1/2',
-                         'relative w-16 h-16 bg-red-500 right-72 top-1/2', 'relative w-16 h-16 bg-red-500 -right-72 top-1/2', 
-                         'relative w-32 h-32 bg-red-500 right-72 top-1/2', 'relative w-32 h-32 bg-red-500 -right-72 top-1/2',
-                         'relative w-48 h-48 bg-red-500 right-72 top-1/2', 'relative w-48 h-48 bg-red-500 -right-72 top-1/2',
-                         'relative w-64 h-64 bg-red-500 right-72 top-1/2', 'relative w-64 h-64 bg-red-500 -right-72 top-1/2']
+    const Button13: Target = {css: 'relative w-48 h-48 bg-red-500 right-40 top-1/2',  Side: 'Left', Distance: '40', Size: '48'}
+    const Button14: Target = {css: 'relative w-48 h-48 bg-red-500 -right-40 top-1/2', Side: 'Right', Distance: '40', Size: '48'}
+   
+    const Button15: Target = {css: 'relative w-64 h-64 bg-red-500 right-40 top-1/2',  Side: 'Left', Distance: '40', Size: '64'}
+    const Button16: Target = {css: 'relative w-64 h-64 bg-red-500 -right-40 top-1/2', Side: 'Right', Distance: '40', Size: '64'}
+    
+    const Button17: Target = {css: 'relative w-16 h-16 bg-red-500 right-56 top-1/2',  Side: 'Left', Distance: '56', Size: '16'}
+    const Button18: Target = {css: 'relative w-16 h-16 bg-red-500 -right-56 top-1/2', Side: 'Right', Distance: '56', Size: '16'}
+    
+    const Button19: Target = {css: 'relative w-32 h-32 bg-red-500 right-56 top-1/2',  Side: 'Left', Distance: '56', Size: '32'}
+    const Button20: Target = {css: 'relative w-32 h-32 bg-red-500 -right-56 top-1/2', Side: 'Right', Distance: '56', Size: '32'}
+    
+    const Button21: Target = {css: 'relative w-48 h-48 bg-red-500 right-56 top-1/2',  Side: 'Left', Distance: '56', Size: '48'}
+    const Button22: Target = {css: 'relative w-48 h-48 bg-red-500 -right-56 top-1/2', Side: 'Right', Distance: '56', Size: '48'}
+   
+    const Button23: Target = {css: 'relative w-64 h-64 bg-red-500 right-56 top-1/2',  Side: 'Left', Distance: '56', Size: '64'}
+    const Button24: Target = {css: 'relative w-64 h-64 bg-red-500 -right-56 top-1/2', Side: 'Right', Distance: '56', Size: '64'}
+    
+    const Button25: Target = {css: 'relative w-16 h-16 bg-red-500 right-72 top-1/2',  Side: 'Left', Distance: '72', Size: '16'}
+    const Button26: Target = {css: 'relative w-16 h-16 bg-red-500 -right-72 top-1/2', Side: 'Right', Distance: '72', Size: '16'}
+    
+    const Button27: Target = {css: 'relative w-32 h-32 bg-red-500 right-72 top-1/2',  Side: 'Left', Distance: '72', Size: '32'}
+    const Button28: Target = {css: 'relative w-32 h-32 bg-red-500 -right-72 top-1/2', Side: 'Right', Distance: '72', Size: '32'}
+    
+    const Button29: Target = {css: 'relative w-48 h-48 bg-red-500 right-72 top-1/2',  Side: 'Left', Distance: '72', Size: '48'}
+    const Button30: Target = {css: 'relative w-48 h-48 bg-red-500 -right-72 top-1/2', Side: 'Right', Distance: '72', Size: '48'}
+    
+    const Button31: Target = {css: 'relative w-64 h-64 bg-red-500 right-72 top-1/2',  Side: 'Left', Distance: '72', Size: '64'}
+    const Button32: Target = {css: 'relative w-64 h-64 bg-red-500 -right-72 top-1/2', Side: 'Right', Distance: '72', Size: '64'}
+
+
+    //                  Left Side Right Side
+    let buttonNames =   [Button1, Button2, Button3, Button4, Button5, Button6, Button7, Button8,
+                         Button9, Button10, Button11, Button12, Button13, Button14, Button15, Button16,
+                         Button17, Button18, Button19, Button20, Button21, Button22, Button23, Button24,
+                         Button25, Button26, Button27, Button28, Button29, Button30, Button31, Button32]
+ //                        'relative w-32 h-32 bg-red-500 right-96 top-1/2', 'relative w-32 h-32 bg-red-500 -right-96 top-1/2',
+ //                        'relative w-48 h-48 bg-red-500 right-96 top-1/2', 'relative w-48 h-48 bg-red-500 -right-96 top-1/2',
+ //                        'relative w-64 h-64 bg-red-500 right-96 top-1/2', 'relative w-64 h-64 bg-red-500 -right-96 top-1/2',
+ //   9,10                 'relative w-16 h-16 bg-red-500 right-40 top-1/2', 'relative w-16 h-16 bg-red-500 -right-40 top-1/2', 
+ //                        'relative w-32 h-32 bg-red-500 right-40 top-1/2', 'relative w-32 h-32 bg-red-500 -right-40 top-1/2',
+ //                        'relative w-48 h-48 bg-red-500 right-40 top-1/2', 'relative w-48 h-48 bg-red-500 -right-40 top-1/2',
+ //                        'relative w-64 h-64 bg-red-500 right-40 top-1/2', 'relative w-64 h-64 bg-red-500 -right-40 top-1/2',
+ //                        'relative w-16 h-16 bg-red-500 right-56 top-1/2', 'relative w-16 h-16 bg-red-500 -right-56 top-1/2', 
+ //   19,20                'relative w-32 h-32 bg-red-500 right-56 top-1/2', 'relative w-32 h-32 bg-red-500 -right-56 top-1/2',
+ //                        'relative w-48 h-48 bg-red-500 right-56 top-1/2', 'relative w-48 h-48 bg-red-500 -right-56 top-1/2',
+ //                        'relative w-64 h-64 bg-red-500 right-56 top-1/2', 'relative w-64 h-64 bg-red-500 -right-56 top-1/2',
+ //                        'relative w-16 h-16 bg-red-500 right-72 top-1/2', 'relative w-16 h-16 bg-red-500 -right-72 top-1/2', 
+ //                        'relative w-32 h-32 bg-red-500 right-72 top-1/2', 'relative w-32 h-32 bg-red-500 -right-72 top-1/2',
+ //                        'relative w-48 h-48 bg-red-500 right-72 top-1/2', 'relative w-48 h-48 bg-red-500 -right-72 top-1/2',
+ //                        'relative w-64 h-64 bg-red-500 right-72 top-1/2', 'relative w-64 h-64 bg-red-500 -right-72 top-1/2']
   
-    const shuffle = (array: string[]) => 
+    const shuffle = (array: Target[]) => 
     { 
         for (let i = array.length - 1; i > 0; i--) 
             { 
@@ -47,14 +104,14 @@ export default function ResetButton(props) {
         return array; 
     };                  
 
-    shuffle(buttonNames)
+  //  shuffle(buttonNames)
    
     return (
        
     <div className = 'flex absolute w-1/2 h-1/2 top-1/4 left-1/4 justify-center bg-green-400'>
         <div className = 'flex absolute w-32 h-24 bg-slate-700 text-white items-center text-center justify-center'>Number of Trials: {count}</div>
         <button onClick = {() => {Reset(false); props.handleStart(true); logStartTime(); addStartTime([...startTime, Date.now()])}} className = {showReset == true ? 'absolute w-16 h-16 border-2 border-red-400 bg-blue-400 justify-center text-center items-center top-1/2':'hidden' }>Hello</button>
-        <button onClick = {() => {setCount(count + 1); Reset(true); props.handlePause(true)}} className = {showReset == false ? `${buttonNames[count % 32]}` : 'hidden'}>World</button>
+        <button onClick = {() => {setCount(count + 1); Reset(true); props.handlePause(true); addButtonTime([...buttonTime, Date.now()])}} className = {showReset == false ? `${buttonNames[count % 32].css}` : 'hidden'}>World</button>
        </div>
    
       
