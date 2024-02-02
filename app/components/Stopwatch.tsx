@@ -40,16 +40,13 @@ export default function StopWatch() {
     }
   
     return (
-      <div className = 'flex item-center justify-center bg-red-500'>
-        <div className='stopwatch-card'>
-          <p>{formatTime()}</p>
+     
           <div className = 'flex bg-green-200'>
             {
                 <ResetButton handleStart = {handleStart} handlePause = {handlePause} ></ResetButton>
             }
           </div>
-        </div>
-      </div>
+       
     );
     
 

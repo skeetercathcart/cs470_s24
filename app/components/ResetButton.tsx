@@ -15,7 +15,10 @@ export default function ResetButton(props) {
     const [showReset, Reset] = useState(true)
     const [startTime, addStartTime] = useState<Number[]>([]) // Logs the time when the center button is clicked
     const [buttonTime, addButtonTime] = useState<Number[]>([]) // Logs the time the target is clicked
-
+    const [buttonSide, addButtonSide] = useState<String[]>([])
+    const [buttonDistance, addButtonDistance] = useState<String[]>([])
+    const [buttonSize, addButtonSize] = useState<String[]>([])
+    const [totalTime, addTotalTime] = useState<Number[]>([])
   
 
     function logStartTime() {
@@ -90,7 +93,7 @@ export default function ResetButton(props) {
  //                        'relative w-48 h-48 bg-red-500 right-56 top-1/2', 'relative w-48 h-48 bg-red-500 -right-56 top-1/2',
  //                        'relative w-64 h-64 bg-red-500 right-56 top-1/2', 'relative w-64 h-64 bg-red-500 -right-56 top-1/2',
  //                        'relative w-16 h-16 bg-red-500 right-72 top-1/2', 'relative w-16 h-16 bg-red-500 -right-72 top-1/2', 
- //                        'relative w-32 h-32 bg-red-500 right-72 top-1/2', 'relative w-32 h-32 bg-red-500 -right-72 top-1/2',
+ //   29,30                'relative w-32 h-32 bg-red-500 right-72 top-1/2', 'relative w-32 h-32 bg-red-500 -right-72 top-1/2',
  //                        'relative w-48 h-48 bg-red-500 right-72 top-1/2', 'relative w-48 h-48 bg-red-500 -right-72 top-1/2',
  //                        'relative w-64 h-64 bg-red-500 right-72 top-1/2', 'relative w-64 h-64 bg-red-500 -right-72 top-1/2']
   
@@ -104,16 +107,24 @@ export default function ResetButton(props) {
         return array; 
     };                  
 
-  //  shuffle(buttonNames)
+    if(count % 32 == 0){
+        shuffle(buttonNames)
+    }
    
     return (
        
     <div className = 'flex absolute w-1/2 h-1/2 top-1/4 left-1/4 justify-center bg-green-400'>
         <div className = 'flex absolute w-32 h-24 bg-slate-700 text-white items-center text-center justify-center'>Number of Trials: {count}</div>
-        <button onClick = {() => {Reset(false); props.handleStart(true); logStartTime(); addStartTime([...startTime, Date.now()])}} className = {showReset == true ? 'absolute w-16 h-16 border-2 border-red-400 bg-blue-400 justify-center text-center items-center top-1/2':'hidden' }>Hello</button>
-        <button onClick = {() => {setCount(count + 1); Reset(true); props.handlePause(true); addButtonTime([...buttonTime, Date.now()])}} className = {showReset == false ? `${buttonNames[count % 32].css}` : 'hidden'}>World</button>
-       </div>
-   
+        {count < 5 && <button onClick = {() => {Reset(false); logStartTime(); addStartTime([...startTime, Date.now()])}} className = {showReset == true ? 'absolute w-16 h-16 border-2 border-red-400 bg-blue-400 justify-center text-center items-center top-1/2':'hidden' }>Hello</button>}
+        {count < 5 && <button onClick = {() => {setCount(count + 1); Reset(true);
+                                  addButtonTime([...buttonTime, Date.now()]);
+                                  addTotalTime([...totalTime, buttonTime[count] as number - (startTime[count] as number)])
+                                  addButtonSide([...buttonSide, buttonNames[count % 32].Side]);
+                                  addButtonSize([...buttonSize, buttonNames[count % 32].Size]);
+                                  addButtonDistance([...buttonDistance, buttonNames[count % 32].Distance]);
+                                  }} className = {showReset == false ? `${buttonNames[count % 32].css}` : 'hidden'}>World</button> }
+    { count >= 5 && <div className = 'bg-white h-full w-full'>{JSON.stringify(totalTime)}</div>}
+    </div>
       
     );
     }
