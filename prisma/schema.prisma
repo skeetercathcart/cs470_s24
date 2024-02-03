@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model TestResult {
+
+id Int @id @default(autoincrement())
+errors Int @default(0)
+side Side[]
+size ButtonSize[]
+start StartTime[]
+buttonTime ButtonTime[]
+buttonDistance ButtonDistance[]
+
+}
+
+model Side {
+
+id Int @id @default(autoincrement())
+buttonSide String
+testId Int
+test TestResult @relation(fields: [testId], references: [id])
+@@index([testId])
+
+}
+
+model StartTime {
+
+  id Int @id @default(autoincrement())
+  time Int
+  testId Int
+  test TestResult @relation(fields: [testId], references: [id])
+}
+
+model ButtonTime {
+
+  id Int @id @default(autoincrement())
+  buttonTime Int
+  testId Int
+  test TestResult @relation(fields: [testId], references: [id])
+}
+
+model ButtonDistance {
+
+  id Int @id @default(autoincrement())
+  buttonDistance Int
+  testId Int
+  test TestResult @relation(fields: [testId], references: [id])
+}
+
+model ButtonSize {
+
+  id Int @id @default(autoincrement())
+  buttonSize Int
+  testId Int
+  test TestResult @relation(fields: [testId], references: [id])
+}

@@ -1,32 +1,71 @@
 'use client'
 
 import { useState, useEffect } from "react";
+import { createNewTest, uploadDistance, uploadSide, uploadSize, uploadStartTime } from "../functions/database";
+
+// ******START TIME IS TOTAL TIME***********
 
 type Target = {
-    css: String;
-    Side: String;
+    css: string;
+    Side: string;
     Distance: number;
     Size: number;
 }
 
+// ******START TIME IS TOTAL TIME***********
+
+type Result = {
+    testId: number
+    side: string[];
+    distance: number[];
+    startTime: number[];
+    buttonTime: number[];
+    buttonSize: number[];
+    errors: number;
+}
+
+// ******START TIME IS TOTAL TIME***********
+
 export default function ResetButton() {
 
     const [count, setCount] = useState(0)
+    const [error, setError] = useState(0)
     const [initializer, setInitializer] = useState(0)
     const [showReset, Reset] = useState(true)
     const [startTime, addStartTime] = useState<number[]>([]) // Logs the time when the center button is clicked
     const [buttonTime, addButtonTime] = useState<number[]>([]) // Logs the time the target is clicked
-    const [buttonSide, addButtonSide] = useState<String[]>([]) // Logs the size of the target when it is clicked
+    const [buttonSide, addButtonSide] = useState<string[]>([]) // Logs the size of the target when it is clicked
     const [buttonDistance, addButtonDistance] = useState<number[]>([]) // Logs the distance from the center to the target when clicked
     const [buttonSize, addButtonSize] = useState<number[]>([]) // Logs the size of the target when clicked
     const [totalTime, addTotalTime] = useState<number[]>([]) 
   
-    
+ // ******START TIME IS TOTAL TIME***********
+
+    function storeResults() {
+
+        let totalTime: number[] = []
+        const randomInt = () => Math.floor(Math.random() * (1000000 - 1000000000 + 1)) + 1000000000;
+        const result: Result = {testId: randomInt(), side: buttonSide, distance: buttonDistance, startTime: startTime, buttonTime: buttonTime, buttonSize: buttonSize, errors: error}
+        for(let i = 0; i < result.buttonTime.length; i++ ){
+            totalTime.push(result.buttonTime[i] - result.startTime[i])
+        }
+        console.log(JSON.stringify("buttonDistance: " + JSON.stringify(result.distance)))
+        createNewTest(result.testId, result.errors)
+        totalTime.forEach((element) => uploadStartTime(result.testId, element))
+        result.buttonSize.forEach((element) => uploadSize(result.testId, element))
+        result.side.forEach((element) => uploadSide(result.testId, element))
+        result.distance.forEach((element) => uploadDistance(result.testId, element))
+    }
+
+    // ******START TIME IS TOTAL TIME***********
+
     function logStartTime() {
         
         console.log("Start Time: " + JSON.stringify(startTime))
         
     }
+
+    // ******START TIME IS TOTAL TIME***********
 
     function logButtonTime() {
 
@@ -34,11 +73,16 @@ export default function ResetButton() {
 
     }
 
+    // ******START TIME IS TOTAL TIME***********
+
     function logTotalTime() {
 
         console.log("Total Time: " + JSON.stringify(totalTime))
 
     }
+
+
+    // ******START TIME IS TOTAL TIME***********
 
     const Button1: Target = {css: 'relative w-16 h-16 bg-red-500 right-96 top-1/2',  Side: 'Left',  Distance: 96, Size: 16}
     const Button2: Target = {css: 'relative w-16 h-16 bg-red-500 -right-96 top-1/2', Side: 'Right', Distance: 96, Size: 16}
@@ -124,11 +168,17 @@ export default function ResetButton() {
         shuffle(buttonNames)
     }
    
+// ******START TIME IS TOTAL TIME***********
+// ******START TIME IS TOTAL TIME***********
+// ******START TIME IS TOTAL TIME***********
+// ******START TIME IS TOTAL TIME***********
+// ******START TIME IS TOTAL TIME***********
+
     return (
-       
-    <div className = 'flex absolute w-1/2 h-1/2 top-1/4 left-1/4 justify-center bg-green-400'>
+     
+    <div className = 'flex absolute w-full h-full justify-center bg-green-400'>
         {count < 10 && <div className = 'flex absolute w-32 h-24 bg-slate-700 text-white items-center text-center justify-center'>Number of Trials: {count}</div> }
-        {initializer == 0 && <button className = 'absolute w-full h-full bg-white z-50' onClick={() => {addStartTime([...startTime, Date.now()]); addButtonTime([...buttonTime, Date.now()]); setInitializer(1); logTotalTime()}}> </button>}
+        {initializer == 0 && <button className = 'absolute w-full h-full bg-white z-50' onClick={() => {addStartTime([...startTime, Date.now()]); addButtonTime([...buttonTime, Date.now()]); setInitializer(1); logTotalTime()}}> CLICK TO START</button>}
         {count < 10 && <button onClick = {() => {Reset(false); addStartTime([...startTime, Date.now()]); logStartTime(); }} className = {showReset == true ? 'absolute w-16 h-16 border-2 border-red-400 bg-blue-400 justify-center text-center items-center top-1/2':'hidden' }>Hello</button>}
         {count < 10 && <button onClick = {() => {Reset(true);
                                   addButtonTime([...buttonTime, Date.now()]);
@@ -138,13 +188,9 @@ export default function ResetButton() {
                                   setCount(count + 1);
                                   }} className = {showReset == false ? `${buttonNames[count % 32].css}` : 'hidden'}>World</button> }
     { count >= 10 && 
-    <div className = 'bg-white h-full w-full'>
-    <div>{"startTime: " + JSON.stringify(startTime)}</div>
-    <div>{"buttonTime: " + JSON.stringify(buttonTime)}</div>
-    <div>{"buttonSize: " + JSON.stringify(buttonSize)}</div>
-    <div>{"buttonDistance: " + JSON.stringify(buttonDistance)}</div>
-    <div>{"buttonSide: " + JSON.stringify(buttonSide)}</div>
-    </div>}
+    <button className = 'bg-white h-full w-full'
+            onClick = {() => storeResults()}> GET RESULTS
+    </button>}
     </div>
       
     );
