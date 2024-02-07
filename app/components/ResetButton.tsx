@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { createNewTest, uploadDistance, uploadSide, uploadSize, uploadStartTime } from "../functions/database";
 
-// ******START TIME IS TOTAL TIME***********
+// ******IN DB: START TIME IS TOTAL TIME***********
 
 type Target = {
     css: string;
@@ -12,22 +12,26 @@ type Target = {
     Size: number;
 }
 
-// ******START TIME IS TOTAL TIME***********
+// ******IN DB: START TIME IS TOTAL TIME***********
 
 type Result = {
-    testId: number
+    testId: number;
     side: string[];
     distance: number[];
     startTime: number[];
     buttonTime: number[];
     buttonSize: number[];
     errors: number;
+    totalTime: number[];
 }
 
-// ******START TIME IS TOTAL TIME***********
+// ******IN DB: START TIME IS TOTAL TIME***********
 
 export default function ResetButton() {
 
+    //let res: Result = {testId: 0, side: [], distance: [], startTime: [], buttonTime: [], buttonSize: [], errors: 0}
+    const [endResult, setEndResult] = useState<Result>({testId: 0, side: [], distance: [], startTime: [], buttonTime: [], buttonSize: [], errors: 0, totalTime: []})
+    console.log(JSON.stringify(endResult))
     const [count, setCount] = useState(0)
     const [error, setError] = useState(0)
     const [initializer, setInitializer] = useState(0)
@@ -38,14 +42,16 @@ export default function ResetButton() {
     const [buttonDistance, addButtonDistance] = useState<number[]>([]) // Logs the distance from the center to the target when clicked
     const [buttonSize, addButtonSize] = useState<number[]>([]) // Logs the size of the target when clicked
     const [totalTime, addTotalTime] = useState<number[]>([]) 
+    const [showResults, toggleResults] = useState(false)
+    const [buttonOrder, setButtonOrder] = useState<Target[]>([])
   
- // ******START TIME IS TOTAL TIME***********
+ // ******IN DB: START TIME IS TOTAL TIME***********
 
     function storeResults() {
 
         let totalTime: number[] = []
         const randomInt = () => Math.floor(Math.random() * (1000000 - 1000000000 + 1)) + 1000000000;
-        const result: Result = {testId: randomInt(), side: buttonSide, distance: buttonDistance, startTime: startTime, buttonTime: buttonTime, buttonSize: buttonSize, errors: error}
+        let result: Result = {testId: randomInt(), side: buttonSide, distance: buttonDistance, startTime: startTime, buttonTime: buttonTime, buttonSize: buttonSize, errors: error, totalTime: []}
         for(let i = 0; i < result.buttonTime.length; i++ ){
             totalTime.push(result.buttonTime[i] - result.startTime[i])
         }
@@ -55,9 +61,11 @@ export default function ResetButton() {
         result.buttonSize.forEach((element) => uploadSize(result.testId, element))
         result.side.forEach((element) => uploadSide(result.testId, element))
         result.distance.forEach((element) => uploadDistance(result.testId, element))
+        result.totalTime = totalTime
+        setEndResult(result)
     }
 
-    // ******START TIME IS TOTAL TIME***********
+    // ******IN DB: START TIME IS TOTAL TIME***********
 
     function logStartTime() {
         
@@ -65,7 +73,7 @@ export default function ResetButton() {
         
     }
 
-    // ******START TIME IS TOTAL TIME***********
+    // ******IN DB: START TIME IS TOTAL TIME***********
 
     function logButtonTime() {
 
@@ -73,7 +81,7 @@ export default function ResetButton() {
 
     }
 
-    // ******START TIME IS TOTAL TIME***********
+    // ******IN DB: START TIME IS TOTAL TIME***********
 
     function logTotalTime() {
 
@@ -82,7 +90,7 @@ export default function ResetButton() {
     }
 
 
-    // ******START TIME IS TOTAL TIME***********
+    // ******IN DB: START TIME IS TOTAL TIME***********
 
     const Button1: Target = {css: 'relative w-16 h-16 bg-red-500 right-96 top-1/2',  Side: 'Left',  Distance: 96, Size: 16}
     const Button2: Target = {css: 'relative w-16 h-16 bg-red-500 -right-96 top-1/2', Side: 'Right', Distance: 96, Size: 16}
@@ -164,33 +172,52 @@ export default function ResetButton() {
         return array; 
     };                  
 
-    if(count % 32 == 0){
+    if(buttonOrder.length == 0){
         shuffle(buttonNames)
+        setButtonOrder(buttonNames)
     }
    
-// ******START TIME IS TOTAL TIME***********
-// ******START TIME IS TOTAL TIME***********
-// ******START TIME IS TOTAL TIME***********
-// ******START TIME IS TOTAL TIME***********
-// ******START TIME IS TOTAL TIME***********
+// ******IN DB: START TIME IS TOTAL TIME***********
+// ******IN DB: START TIME IS TOTAL TIME***********
+// ******IN DB: START TIME IS TOTAL TIME***********
+// ******IN DB: START TIME IS TOTAL TIME***********
+// ******IN DB: START TIME IS TOTAL TIME***********
 
     return (
      
-    <div className = 'flex absolute w-full h-full justify-center bg-green-400'>
-        {count < 10 && <div className = 'flex absolute w-32 h-24 bg-slate-700 text-white items-center text-center justify-center'>Number of Trials: {count}</div> }
+    <div className = 'flex absolute w-full h-full justify-center'>
+        {count < 10 && <button className = 'absolute h-full w-full z-0' onClick = {() => setError(error + 1)}></button>}
+        {count < 10 && <div className = 'flex absolute z-10 w-32 h-24 bg-slate-700 text-white items-center text-center justify-center'>Number of Trials: {count}</div> }
         {initializer == 0 && <button className = 'absolute w-full h-full bg-white z-50' onClick={() => {addStartTime([...startTime, Date.now()]); addButtonTime([...buttonTime, Date.now()]); setInitializer(1); logTotalTime()}}> CLICK TO START</button>}
         {count < 10 && <button onClick = {() => {Reset(false); addStartTime([...startTime, Date.now()]); logStartTime(); }} className = {showReset == true ? 'absolute w-16 h-16 border-2 border-red-400 bg-blue-400 justify-center text-center items-center top-1/2':'hidden' }>Hello</button>}
         {count < 10 && <button onClick = {() => {Reset(true);
+                                  buttonOrder.length -= 1;  
+                                  setButtonOrder(buttonOrder);
                                   addButtonTime([...buttonTime, Date.now()]);
-                                  addButtonSide([...buttonSide, buttonNames[count % 32].Side]);
-                                  addButtonSize([...buttonSize, buttonNames[count % 32].Size]);
-                                  addButtonDistance([...buttonDistance, buttonNames[count % 32].Distance]);
+                                  addButtonSide([...buttonSide, buttonOrder[count % 32].Side]);
+                                  addButtonSize([...buttonSize, buttonOrder[count % 32].Size]);
+                                  addButtonDistance([...buttonDistance, buttonOrder[count % 32].Distance]);
                                   setCount(count + 1);
-                                  }} className = {showReset == false ? `${buttonNames[count % 32].css}` : 'hidden'}>World</button> }
-    { count >= 10 && 
+                                  }} className = {showReset == false ? `${buttonOrder[buttonOrder.length - 1].css}` : 'hidden'}>World</button> }
+    { count >= 10 && !showResults &&
     <button className = 'bg-white h-full w-full'
-            onClick = {() => storeResults()}> GET RESULTS
+            onClick = {() => {storeResults(); toggleResults(true)}}> GET RESULTS
     </button>}
+    { showResults && 
+        <div className = 'absolute w-full h-full bg-orange-400'>
+            <ul>
+                <li className = 'text-white p-5'> TestID: {endResult.testId}</li>
+                <li className = 'text-white p-5'> Errors: {endResult.errors}</li>
+                <li className = 'text-white p-5'> buttonTime: {JSON.stringify(endResult.buttonTime)}</li>
+                <li className = 'text-white p-5'> buttonSize: {JSON.stringify(endResult.buttonSize)}</li>
+                <li className = 'text-white p-5'> distance: {JSON.stringify(endResult.distance)}</li>
+                <li className = 'text-white p-5'> startTime: {JSON.stringify(endResult.startTime)}</li>
+                <li className = 'text-white p-5'> totalTime: {JSON.stringify(endResult.totalTime)}</li>
+
+            </ul>
+
+        </div>
+    }
     </div>
       
     );
