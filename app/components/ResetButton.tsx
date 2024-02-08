@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { createNewTest, uploadDistance, uploadSide, uploadSize, uploadStartTime } from "../functions/database";
 
+
 // ******IN DB: START TIME IS TOTAL TIME***********
 
 type Target = {
@@ -177,51 +178,55 @@ export default function ResetButton() {
         setButtonOrder(buttonNames)
     }
    
+
+
 // ******IN DB: START TIME IS TOTAL TIME***********
 // ******IN DB: START TIME IS TOTAL TIME***********
 // ******IN DB: START TIME IS TOTAL TIME***********
 // ******IN DB: START TIME IS TOTAL TIME***********
 // ******IN DB: START TIME IS TOTAL TIME***********
 
+// Contract Shit // 
+
+
     return (
      
-    <div className = 'flex absolute w-full h-full justify-center'>
-        {count < 10 && <button className = 'absolute cursor-default h-full w-full z-0' onClick = {() => setError(error + 1)}></button>}
-        {count < 10 && <div className = 'flex absolute z-10 w-52 h-24 text-xl font-semibold bg-slate-700 text-white border-2 border-black items-center text-center justify-center'>Number of Trials: {count}</div> }
-        {initializer == 0 && 
-            <button className = 'flex absolute w-full h-full bg-slate-200 z-50 justify-center items-center' onClick={() => {addStartTime([...startTime, Date.now()]); addButtonTime([...buttonTime, Date.now()]); setInitializer(1); logTotalTime()}}>
-                <div className = 'flex absolute justify-center items-center bg-white shadow-xl text-4xl font-bold h-64 w-64 border-4 border-black'>CLICK ANYWHERE TO START</div>
-            </button>}
-        {count < 10 && <button onClick = {() => {Reset(false); addStartTime([...startTime, Date.now()]); logStartTime(); }} className = {showReset == true ? 'absolute w-16 h-16  bg-blue-400 justify-center text-center items-center top-1/2':'hidden' }></button>}
-        {count < 10 && <button onClick = {() => {Reset(true);
-                                  buttonOrder.length -= 1;  
-                                  setButtonOrder(buttonOrder);
-                                  addButtonTime([...buttonTime, Date.now()]);
-                                  addButtonSide([...buttonSide, buttonOrder[count % 32].Side]);
-                                  addButtonSize([...buttonSize, buttonOrder[count % 32].Size]);
-                                  addButtonDistance([...buttonDistance, buttonOrder[count % 32].Distance]);
-                                  setCount(count + 1);
-                                  }} className = {showReset == false ? `${buttonOrder[buttonOrder.length - 1].css}` : 'hidden'}></button> }
-    { count >= 10 && !showResults &&
-    <button className = 'flex absolute w-full h-full bg-slate-200 z-50 justify-center items-center'
-            onClick = {() => {storeResults(); toggleResults(true)}}>
-                <div className = 'flex absolute shadow-2xl justify-center items-center bg-white text-4xl font-bold h-64 w-64 border-4 border-black'> CLICK ANYWHERE FOR RESULTS</div>
-    </button>}
-    { showResults && 
-        <div className = 'absolute w-full h-full bg-slate-200'>
-            <ul>
-                <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> TestID: {endResult.testId}</li>
-                <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> Errors: {endResult.errors}</li>
-                <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> Ellapsed Time: {(buttonTime[buttonTime.length - 1] - endResult.startTime[0]) / 1000} seconds</li>
-                <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> buttonTime: {JSON.stringify(endResult.buttonTime)}</li>
-                <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> buttonSize: {JSON.stringify(endResult.buttonSize)}</li>
-                <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> distance: {JSON.stringify(endResult.distance)}</li>
-                <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> startTime: {JSON.stringify(endResult.startTime)}</li>
-                <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> totalTime: {JSON.stringify(endResult.totalTime)}</li>
-            </ul>
+        <div className = 'flex absolute w-full h-full justify-center'>
+            {count < 10 && <button className = 'absolute cursor-default h-full w-full z-0' onClick = {() => setError(error + 1)}></button>}
+            {count < 10 && <div className = 'flex absolute z-10 w-52 h-24 text-xl font-semibold bg-slate-700 text-white border-2 border-black items-center text-center justify-center'>Number of Trials: {count}</div> }
+            {initializer == 0 && 
+                <button className = 'flex absolute w-full h-full bg-slate-200 z-50 justify-center items-center' onClick={() => {addStartTime([...startTime, Date.now()]); addButtonTime([...buttonTime, Date.now()]); setInitializer(1); logTotalTime()}}>
+                    <div className = 'flex absolute justify-center items-center bg-white shadow-xl text-4xl font-bold h-64 w-64 border-4 border-black'>CLICK ANYWHERE TO START</div>
+                </button>}
+            {count < 10 && <button onClick = {() => {Reset(false); addStartTime([...startTime, Date.now()]); logStartTime(); }} className = {showReset == true ? 'absolute w-16 h-16  bg-blue-400 justify-center text-center items-center top-1/2':'hidden' }></button>}
+            {count < 10 && <button onClick = {() => {Reset(true);
+                                    buttonOrder.length -= 1;  
+                                    setButtonOrder(buttonOrder);
+                                    addButtonTime([...buttonTime, Date.now()]);
+                                    addButtonSide([...buttonSide, buttonOrder[count % 32].Side]);
+                                    addButtonSize([...buttonSize, buttonOrder[count % 32].Size]);
+                                    addButtonDistance([...buttonDistance, buttonOrder[count % 32].Distance]);
+                                    setCount(count + 1);
+                                    }} className = {showReset == false ? `${buttonOrder[buttonOrder.length - 1].css}` : 'hidden'}></button> }
+        { count >= 10 && !showResults &&
+        <button className = 'flex absolute w-full h-full bg-slate-200 z-50 justify-center items-center'
+                onClick = {() => {storeResults(); toggleResults(true)}}>
+                    <div className = 'flex absolute shadow-2xl justify-center items-center bg-white text-4xl font-bold h-64 w-64 border-4 border-black'> CLICK ANYWHERE FOR RESULTS</div>
+        </button>}
+        { showResults && 
+            <div className = 'absolute w-full h-full bg-slate-200'>
+                <ul>
+                    <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> TestID: {endResult.testId}</li>
+                    <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> Errors: {endResult.errors}</li>
+                    <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> Ellapsed Time: {(buttonTime[buttonTime.length - 1] - endResult.startTime[0]) / 1000} seconds</li>
+                    <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> buttonTime: {JSON.stringify(endResult.buttonTime)}</li>
+                    <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> buttonSize: {JSON.stringify(endResult.buttonSize)}</li>
+                    <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> distance: {JSON.stringify(endResult.distance)}</li>
+                    <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> startTime: {JSON.stringify(endResult.startTime)}</li>
+                    <li className = 'border-2 my-1 border-black font-bold text-xl bg-white p-5'> totalTime: {JSON.stringify(endResult.totalTime)}</li>
+                </ul>
+            </div>
+        }
         </div>
-    }
-    </div>
-      
     );
     }
