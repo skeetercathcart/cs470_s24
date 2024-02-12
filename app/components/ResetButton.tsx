@@ -192,14 +192,14 @@ export default function ResetButton() {
     return (
      
         <div className = 'flex absolute w-full h-full justify-center'>
-            {count < 10 && <button className = 'absolute cursor-default h-full w-full z-0' onClick = {() => setError(error + 1)}></button>}
-            {count < 10 && <div className = 'flex absolute z-10 w-52 h-24 text-xl font-semibold bg-slate-700 text-white border-2 border-black items-center text-center justify-center'>Number of Trials: {count}</div> }
+            {count < 320 && <button className = 'absolute cursor-default h-full w-full z-0' onClick = {() => setError(error + 1)}></button>}
+            {count < 320 && <div className = 'flex absolute z-10 w-52 h-24 text-xl font-semibold bg-slate-700 text-white border-2 border-black items-center text-center justify-center'>Number of Trials: {count}</div> }
             {initializer == 0 && 
                 <button className = 'flex absolute w-full h-full bg-slate-200 z-50 justify-center items-center' onClick={() => {addStartTime([...startTime, Date.now()]); addButtonTime([...buttonTime, Date.now()]); setInitializer(1); logTotalTime()}}>
                     <div className = 'flex absolute justify-center items-center bg-white shadow-xl text-4xl font-bold h-64 w-64 border-4 border-black'>CLICK ANYWHERE TO START</div>
                 </button>}
-            {count < 10 && <button onClick = {() => {Reset(false); addStartTime([...startTime, Date.now()]); logStartTime(); }} className = {showReset == true ? 'absolute w-16 h-16  bg-blue-400 justify-center text-center items-center top-1/2':'hidden' }></button>}
-            {count < 10 && <button onClick = {() => {Reset(true);
+            {count < 320 && <button onClick = {() => {Reset(false); addStartTime([...startTime, Date.now()]); logStartTime(); }} className = {showReset == true ? 'absolute w-16 h-16  bg-blue-400 justify-center text-center items-center top-1/2':'hidden' }></button>}
+            {count < 320 && <button onClick = {() => {Reset(true);
                                     buttonOrder.length -= 1;  
                                     setButtonOrder(buttonOrder);
                                     addButtonTime([...buttonTime, Date.now()]);
