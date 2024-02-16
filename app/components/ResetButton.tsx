@@ -90,6 +90,9 @@ export default function ResetButton() {
 
     }
 
+    function logButtonData() {
+        console.log(button)
+    }
 
     // ******IN DB: START TIME IS TOTAL TIME***********
 
@@ -200,15 +203,15 @@ export default function ResetButton() {
                 </button>}
             {count < 320 && <button onClick = {() => {Reset(false); addStartTime([...startTime, Date.now()]); logStartTime(); }} className = {showReset == true ? 'absolute w-16 h-16  bg-blue-400 justify-center text-center items-center top-1/2':'hidden' }></button>}
             {count < 320 && <button onClick = {() => {Reset(true);
+                                    addButtonTime([...buttonTime, Date.now()]);
+                                    addButtonSide([...buttonSide, buttonOrder[buttonOrder.length - 1].Side]);
+                                    addButtonSize([...buttonSize, buttonOrder[buttonOrder.length - 1].Size]);
+                                    addButtonDistance([...buttonDistance, buttonOrder[buttonOrder.length - 1].Distance]);
+                                    setCount(count + 1);
                                     buttonOrder.length -= 1;  
                                     setButtonOrder(buttonOrder);
-                                    addButtonTime([...buttonTime, Date.now()]);
-                                    addButtonSide([...buttonSide, buttonOrder[count % 32].Side]);
-                                    addButtonSize([...buttonSize, buttonOrder[count % 32].Size]);
-                                    addButtonDistance([...buttonDistance, buttonOrder[count % 32].Distance]);
-                                    setCount(count + 1);
                                     }} className = {showReset == false ? `${buttonOrder[buttonOrder.length - 1].css}` : 'hidden'}></button> }
-        { count >= 10 && !showResults &&
+        { count >= 320 && !showResults &&
         <button className = 'flex absolute w-full h-full bg-slate-200 z-50 justify-center items-center'
                 onClick = {() => {storeResults(); toggleResults(true)}}>
                     <div className = 'flex absolute shadow-2xl justify-center items-center bg-white text-4xl font-bold h-64 w-64 border-4 border-black'> CLICK ANYWHERE FOR RESULTS</div>
